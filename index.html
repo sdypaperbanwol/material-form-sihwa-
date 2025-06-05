@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>자재창고 물품 관리(시화)</title>
+  <title>자재창고 물품 관리(시)</title>
   <style>
     form {
       display: flex;
@@ -15,9 +15,14 @@
     label {
       font-weight: bold;
     }
-    select, input {
+    select, input, textarea {
       padding: 6px 8px;
       font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
     }
     button {
       padding: 10px;
@@ -55,6 +60,9 @@
     <label for="quantity">수량</label>
     <input type="number" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1" required />
 
+    <label for="remarks">비고</label>
+    <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="3"></textarea>
+
     <button type="submit">저장</button>
     <div class="message" id="msg"></div>
   </form>
@@ -68,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let items = {};
 
   // 1) 물품 리스트 가져오기
-  fetch("https://script.google.com/macros/s/AKfycbztCreMf6iqrElgzT2BKDA-TaBkNcsQtXD2LIFkf70nDMYeiIX-bNs3aqXBp16ngKVEsg/exec")  // ← 배포된 스크립트 주소로 교체
+  fetch("https://script.google.com/macros/s/AKfycbx2DjCyuimyNQe2k_QypJrqzkaoEiCVCt0EwudCF3nN-cYiBY-rG9s-q7-Cwjy7VUqn_g/exec")  // ← 배포된 스크립트 주소로 교체
     .then(res => res.json())
     .then(data => {
       items = data;
@@ -126,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     msgDiv.style.color = "green";
 
     const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbztCreMf6iqrElgzT2BKDA-TaBkNcsQtXD2LIFkf70nDMYeiIX-bNs3aqXBp16ngKVEsg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbx2DjCyuimyNQe2k_QypJrqzkaoEiCVCt0EwudCF3nN-cYiBY-rG9s-q7-Cwjy7VUqn_g/exec", {
       method: "POST",
       body: new URLSearchParams(formData)
     })
