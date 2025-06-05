@@ -38,34 +38,39 @@
 </head>
 <body>
 
-  <form id="materialForm">
-    <label for="category">물품 종류</label>
-    <select id="category" name="category" required>
-      <option value="">-- 선택하세요 --</option>
-    </select>
+ <form id="materialForm">
+  <label for="category">물품 종류</label>
+  <select id="category" name="category" required>
+    <option value="">-- 선택하세요 --</option>
+  </select>
 
-    <label for="subcategory">세부 종류</label>
-    <select id="subcategory" name="subcategory" required>
-      <option value="">-- 선택하세요 --</option>
-    </select>
+  <label for="subcategory">세부 종류</label>
+  <select id="subcategory" name="subcategory" required>
+    <option value="">-- 선택하세요 --</option>
+  </select>
 
-    <label for="size">사이즈</label>
-    <select id="size" name="size" required>
-      <option value="">-- 선택하세요 --</option>
-    </select>
+  <label for="size">사이즈</label>
+  <select id="size" name="size" required>
+    <option value="">-- 선택하세요 --</option>
+  </select>
 
-    <label for="name">이름</label>
-    <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+  <label for="name">이름(기타)</label>
+  <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
 
-    <label for="quantity">수량</label>
-    <input type="number" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1" required />
+  <label for="quantity">수량</label>
+  <input type="number" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1" required />
 
-    <label for="remarks">비고</label>
-    <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="3"></textarea>
+  <label for="remarks">비고</label>
+  <small style="line-height: 1.4; font-size: 12px; color: #666; margin-top: -8px;">
+    예: 6월 10일 정비로 장화 270 요청<br>
+    예: 6월 12일 각반 수령 요청
+  </small>
+  <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="4"></textarea>
 
-    <button type="submit">저장</button>
-    <div class="message" id="msg"></div>
-  </form>
+  <button type="submit">저장</button>
+  <div class="message" id="msg"></div>
+</form>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
