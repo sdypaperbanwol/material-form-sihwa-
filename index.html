@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>자재창고 물품 관리(시)</title>
+  <title>자재창고 물품 관리(시화)</title>
   <style>
     form {
       display: flex;
@@ -38,39 +38,34 @@
 </head>
 <body>
 
- <form id="materialForm">
-  <label for="category">물품 종류</label>
-  <select id="category" name="category" required>
-    <option value="">-- 선택하세요 --</option>
-  </select>
+  <form id="materialForm">
+    <label for="category">물품 종류</label>
+    <select id="category" name="category" required>
+      <option value="">-- 선택하세요 --</option>
+    </select>
 
-  <label for="subcategory">세부 종류</label>
-  <select id="subcategory" name="subcategory" required>
-    <option value="">-- 선택하세요 --</option>
-  </select>
+    <label for="subcategory">세부 종류</label>
+    <select id="subcategory" name="subcategory" required>
+      <option value="">-- 선택하세요 --</option>
+    </select>
 
-  <label for="size">사이즈</label>
-  <select id="size" name="size" required>
-    <option value="">-- 선택하세요 --</option>
-  </select>
+    <label for="size">사이즈</label>
+    <select id="size" name="size" required>
+      <option value="">-- 선택하세요 --</option>
+    </select>
 
-  <label for="name">이름(기타)</label>
-  <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+    <label for="name">이름</label>
+    <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
 
-  <label for="quantity">수량</label>
-  <input type="number" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1" required />
+    <label for="quantity">수량</label>
+    <input type="number" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1" required />
 
-  <label for="remarks">비고</label>
-  <small style="line-height: 1.4; font-size: 12px; color: #666; margin-top: -8px;">
-    예: 6월 10일 정비로 장화 270 요청<br>
-    예: 6월 12일 각반 수령 요청
-  </small>
-  <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="4"></textarea>
+    <label for="remarks">비고</label>
+    <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="3"></textarea>
 
-  <button type="submit">저장</button>
-  <div class="message" id="msg"></div>
-</form>
-
+    <button type="submit">저장</button>
+    <div class="message" id="msg"></div>
+  </form>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -81,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let items = {};
 
   // 1) 물품 리스트 가져오기
-  fetch("https://script.google.com/macros/s/AKfycbx2DjCyuimyNQe2k_QypJrqzkaoEiCVCt0EwudCF3nN-cYiBY-rG9s-q7-Cwjy7VUqn_g/exec")  // ← 배포된 스크립트 주소로 교체
+  fetch("https://script.google.com/macros/s/AKfycbw0M--G21sPH4CT-s1-gNFlrHisORUoECn0WTd8L0o266kLxKRMompATmCVKFhkEstJ/exec")  // ← 배포된 스크립트 주소로 교체
     .then(res => res.json())
     .then(data => {
       items = data;
@@ -139,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     msgDiv.style.color = "green";
 
     const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbx2DjCyuimyNQe2k_QypJrqzkaoEiCVCt0EwudCF3nN-cYiBY-rG9s-q7-Cwjy7VUqn_g/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbw0M--G21sPH4CT-s1-gNFlrHisORUoECn0WTd8L0o266kLxKRMompATmCVKFhkEstJ/exec", {
       method: "POST",
       body: new URLSearchParams(formData)
     })
