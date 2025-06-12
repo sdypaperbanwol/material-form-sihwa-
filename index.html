@@ -154,15 +154,35 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
     return;
   }
 
-  const key = `${category} ${type} ${size}`; // ✅ key 먼저 만들고
+  const key = `${category} ${type} ${size}`;
+  const photos = photoMap[key];
+  const container = document.getElementById("photoContainer");
+  container.innerHTML = "";
 
-  // ✅ 그리고 나서 로그 찍기
   console.log("🔍 key:", `"${key}"`);
   console.log("🧩 photoMap has key?", photoMap.hasOwnProperty(key));
-  console.log("📸 photoMap[key]:", photoMap[key]);
+  console.log("📸 photoMap[key]:", photos);
 
-  const photos = photoMap[key];
-  const
+  if (photos && photos.length > 0) {
+    // ✅ 여기 이 부분에 방어로직 포함
+    photos.forEach(url => {
+      if (typeof url === "string" && url.startsWith("http")) {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = key;
+        img.style.maxWidth = "180px";
+        img.style.maxHeight = "180px";
+        img.style.border = "1px solid #ccc";
+        container.appendChild(img);
+      }
+    });
+  } else {
+    container.innerHTML = "<p>해당 항목의 사진이 없습니다.</p>";
+  }
+
+  document.getElementById("photoModal").style.display = "flex";
+});
+
 
   // ✅ 폼 제출
   document.getElementById("materialForm").addEventListener("submit", function(e) {
