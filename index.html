@@ -145,52 +145,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ 사진 보기 버튼 클릭
 document.getElementById("viewPhotos").addEventListener("click", () => {
-  const category = categorySelect.value.trim();
-  const type = subSelect.value.trim();
-   const sizeRaw = sizeSelect.value.trim();
-  const size = sizeRaw.split(" ")[0];  // ← 요기 추가! "245 (재고: X)" → "245"
+  const category = categorySelect.value.trim();  // ex: 보호구(안전화류)
+  const typeRaw = subSelect.value.trim();        // ex: 안전화 RF-41
+  const sizeRaw = sizeSelect.value.trim();       // ex: 270 (재고: 1)
 
-    // ✅ 여기 추가해
-  console.log("👉 categorySelect:", category);
-  console.log("👉 subSelect:", type);
-  console.log("👉 sizeSelect:", size);
+  const size = sizeRaw.split(" ")[0];            // "270"
+  const typeParts = typeRaw.split(" ");          // ['안전화', 'RF-41']
+  
+  const type = typeParts[0];                     // "안전화"
+  const model = typeParts.slice(1).join(" ");    // "RF-41" 또는 "YAK-66" 등
 
+  const key = `${category} ${type} ${model} ${size}`;  // 최종 완전한 key 조립
 
-  if (!category || !type || !size) {
+  console.log("🧪 최종 key:", key);
+  console.log("📸 photoMap keys:", Object.keys(photoMap));
+
+  if (!category || !type || !model || !size) {
     alert("물품 종류, 세부 종류, 사이즈를 모두 선택해주세요.");
     return;
   }
 
-  const key = `${category} ${type} ${size}`;
   const photos = photoMap[key];
   const container = document.getElementById("photoContainer");
   container.innerHTML = "";
 
- // ✅ 여기에 검사 코드 추가 👇
-  console.log("🧪 최종 key:", `"${key}"`);
-  for (const k of Object.keys(photoMap)) {
-    if (k === key) {
-      console.log("✅ 정확히 일치하는 key 있음:", k);
-    } else if (k.trim() === key.trim()) {
-      console.log("⚠️ trim 일치 (공백 문제 가능성):", k);
-    } else if (k.replace(/\s+/g, '') === key.replace(/\s+/g, '')) {
-      console.log("⚠️ 공백 제거 후 일치 (공백 섞인 문제):", k);
-    }
+  if (!photos || photos.length === 0) {
+    container.innerHTML = "<p>해당 물품에 대한 사진이 없습니다.</p>";
+    return;
   }
 
-  // ✅ 원래 사진 출력 로직
-  if (photos && photos.length > 0) {
-    photos.forEach(url => {
-      if (typeof url === "string" && url.startsWith("http")) {
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = key;
-        img.style.maxWidth = "180px";
-        img.style.maxHeight = "180px";
-        img.style.border = "1px solid #ccc";
-        container.appendChild(img);
-      }
-    });
+  // ✅ 이미지 표시
+  photos.forEach(url => {
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "물품 이미지";
+    img.style.maxWidth = "100%";
+    img.style.marginBottom = "10px";
+    container.appendChild(img);
+  });
+});
+
   } else {
     container.innerHTML = "<p>해당 물품에 대한 사진이 없습니다.</p>";
   }
