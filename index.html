@@ -147,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("viewPhotos").addEventListener("click", () => {
   const category = categorySelect.value.trim();
   const type = subSelect.value.trim();
-  const size = sizeSelect.value.trim();
+   const sizeRaw = sizeSelect.value.trim();
+  const size = sizeRaw.split(" ")[0];  // ← 요기 추가! "245 (재고: X)" → "245"
 
     // ✅ 여기 추가해
   console.log("👉 categorySelect:", category);
