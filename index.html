@@ -166,12 +166,20 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
   const container = document.getElementById("photoContainer");
   container.innerHTML = "";
 
-  console.log("🔍 key:", `"${key}"`);
-  console.log("🧩 photoMap has key?", photoMap.hasOwnProperty(key));
-  console.log("📸 photoMap[key]:", photos);
+ // ✅ 여기에 검사 코드 추가 👇
+  console.log("🧪 최종 key:", `"${key}"`);
+  for (const k of Object.keys(photoMap)) {
+    if (k === key) {
+      console.log("✅ 정확히 일치하는 key 있음:", k);
+    } else if (k.trim() === key.trim()) {
+      console.log("⚠️ trim 일치 (공백 문제 가능성):", k);
+    } else if (k.replace(/\s+/g, '') === key.replace(/\s+/g, '')) {
+      console.log("⚠️ 공백 제거 후 일치 (공백 섞인 문제):", k);
+    }
+  }
 
+  // ✅ 원래 사진 출력 로직
   if (photos && photos.length > 0) {
-    // ✅ 여기 이 부분에 방어로직 포함
     photos.forEach(url => {
       if (typeof url === "string" && url.startsWith("http")) {
         const img = document.createElement("img");
@@ -184,10 +192,8 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
       }
     });
   } else {
-    container.innerHTML = "<p>해당 항목의 사진이 없습니다.</p>";
+    container.innerHTML = "<p>해당 물품에 대한 사진이 없습니다.</p>";
   }
-
-  document.getElementById("photoModal").style.display = "flex";
 });
 
 
