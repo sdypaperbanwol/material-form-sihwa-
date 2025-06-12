@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
- // ✅ 사진 보기 버튼 클릭
+// ✅ 사진 보기 버튼 클릭
 document.getElementById("viewPhotos").addEventListener("click", () => {
   const category = categorySelect.value.trim();
   const type = subSelect.value.trim();
@@ -154,28 +154,15 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
     return;
   }
 
-  const key = `${category} ${type} ${size}`;
+  const key = `${category} ${type} ${size}`; // ✅ key 먼저 만들고
+
+  // ✅ 그리고 나서 로그 찍기
+  console.log("🔍 key:", `"${key}"`);
+  console.log("🧩 photoMap has key?", photoMap.hasOwnProperty(key));
+  console.log("📸 photoMap[key]:", photoMap[key]);
+
   const photos = photoMap[key];
-
-  const container = document.getElementById("photoContainer");
-  container.innerHTML = "";
-
-  if (photos && photos.length > 0) {
-    photos.forEach(url => {  // ✅ 여기에만 forEach 써야 함
-      const img = document.createElement("img");
-      img.src = url;
-      img.alt = key;
-      img.style.maxWidth = "180px";
-      img.style.maxHeight = "180px";
-      img.style.border = "1px solid #ccc";
-      container.appendChild(img);
-    });
-  } else {
-    container.innerHTML = "<p>해당 항목의 사진이 없습니다.</p>";
-  }
-
-  document.getElementById("photoModal").style.display = "flex";
-});
+  const
 
   // ✅ 폼 제출
   document.getElementById("materialForm").addEventListener("submit", function(e) {
