@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let photoMap = {}; // ✅ 사진 데이터용
 
   // ✅ 데이터 가져오기
-  fetch("https://script.google.com/macros/s/AKfycbwv2Rf93LWzIH7jPEBi93BeYDbt0jWpOM3DPugNL11wkjrbM_0iTlV1s59WKFB3FFQ/exec")
+  fetch("https://script.google.com/macros/s/AKfycbyiR8x2B6rMJdezD_EL5zUJfgKguhxGjDNzN5oxVnrPG77jcrKEeHrg_RSFNvch7yIC/exec")
     .then(res => res.json())
     .then(data => {
       items = data.items;
@@ -143,37 +143,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // ✅ 사진 보기 버튼 클릭
-  document.getElementById("viewPhotos").addEventListener("click", () => {
-    const category = categorySelect.value.trim();
-    const type = subSelect.value.trim();
-    const size = sizeSelect.value.trim();
+ // ✅ 사진 보기 버튼 클릭
+document.getElementById("viewPhotos").addEventListener("click", () => {
+  const category = categorySelect.value.trim();
+  const type = subSelect.value.trim();
+  const size = sizeSelect.value.trim();
 
-    if (!category || !type || !size) {
-      alert("물품 종류, 세부 종류, 사이즈를 모두 선택해주세요.");
-      return;
-    }
+  if (!category || !type || !size) {
+    alert("물품 종류, 세부 종류, 사이즈를 모두 선택해주세요.");
+    return;
+  }
 
-    const key = `${category} ${type} ${size}`;
-    const photos = photoMap[key];
-    const container = document.getElementById("photoContainer");
-    container.innerHTML = "";
+  const key = `${category} ${type} ${size}`;
+  const photos = photoMap[key];
 
-    if (photos && photos.length > 0) {
-      photos.forEach(url => {
-        const img = document.createElement("img");
-        img.src = url;
-        img.style.maxWidth = "180px";
-        img.style.maxHeight = "180px";
-        img.style.border = "1px solid #ccc";
-        container.appendChild(img);
-      });
-    } else {
-      container.innerHTML = "<p>해당 항목의 사진이 없습니다.</p>";
-    }
+  const container = document.getElementById("photoContainer");
+  container.innerHTML = "";
 
-    document.getElementById("photoModal").style.display = "flex";
-  });
+  if (photos && photos.length > 0) {
+    photos.forEach(url => {  // ✅ 여기에만 forEach 써야 함
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = key;
+      img.style.maxWidth = "180px";
+      img.style.maxHeight = "180px";
+      img.style.border = "1px solid #ccc";
+      container.appendChild(img);
+    });
+  } else {
+    container.innerHTML = "<p>해당 항목의 사진이 없습니다.</p>";
+  }
+
+  document.getElementById("photoModal").style.display = "flex";
+});
 
   // ✅ 폼 제출
   document.getElementById("materialForm").addEventListener("submit", function(e) {
@@ -182,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
     msgDiv.style.color = "green";
 
     const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbwv2Rf93LWzIH7jPEBi93BeYDbt0jWpOM3DPugNL11wkjrbM_0iTlV1s59WKFB3FFQ/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyiR8x2B6rMJdezD_EL5zUJfgKguhxGjDNzN5oxVnrPG77jcrKEeHrg_RSFNvch7yIC/exec", {
       method: "POST",
       body: new URLSearchParams(formData)
     })
