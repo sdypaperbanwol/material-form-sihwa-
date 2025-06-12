@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let photoMap = {}; // ✅ 사진 데이터용
 
   // ✅ 데이터 가져오기
-  fetch("https://script.google.com/macros/s/AKfycbyiR8x2B6rMJdezD_EL5zUJfgKguhxGjDNzN5oxVnrPG77jcrKEeHrg_RSFNvch7yIC/exec")
+  fetch("https://script.google.com/macros/s/AKfycbyxq7FOo_eeiFC45hGNxSXpXQp4GwM1QMVlKAcX-YASK7ATRxyyEQLUHkxWABB333Px/exec")
     .then(res => res.json())
     .then(data => {
       items = data.items;
@@ -191,7 +191,7 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
     msgDiv.style.color = "green";
 
     const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbyiR8x2B6rMJdezD_EL5zUJfgKguhxGjDNzN5oxVnrPG77jcrKEeHrg_RSFNvch7yIC/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyxq7FOo_eeiFC45hGNxSXpXQp4GwM1QMVlKAcX-YASK7ATRxyyEQLUHkxWABB333Px/exec", {
       method: "POST",
       body: new URLSearchParams(formData)
     })
