@@ -149,6 +149,12 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
   const type = subSelect.value.trim();
   const size = sizeSelect.value.trim();
 
+    // ✅ 여기 추가해
+  console.log("👉 categorySelect:", category);
+  console.log("👉 subSelect:", type);
+  console.log("👉 sizeSelect:", size);
+
+
   if (!category || !type || !size) {
     alert("물품 종류, 세부 종류, 사이즈를 모두 선택해주세요.");
     return;
