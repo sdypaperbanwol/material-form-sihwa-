@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>자재창고 물품 관리(시화)</title>
+  <title>자재창고 물품 관리(반월월)</title>
   <style>
     form {
       display: flex;
@@ -64,21 +64,9 @@
     <label for="remarks">비고</label>
     <textarea id="remarks" name="remarks" placeholder="비고를 입력하세요" rows="3"></textarea>
 
-    <!-- ✅ 사진 보기 버튼 추가 -->
-    <button type="button" id="viewPhotos">사진 보기</button>
-
     <button type="submit">저장</button>
     <div class="message" id="msg"></div>
   </form>
-
-  <!-- ✅ 사진 모달 -->
-  <div id="photoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
-    <div style="background:#fff; padding:20px; border-radius:10px; max-width:90%; max-height:80%; overflow:auto;">
-      <div id="photoContainer" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;"></div>
-      <button onclick="document.getElementById('photoModal').style.display='none'">닫기</button>
-    </div>
-  </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -86,16 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const subSelect = document.getElementById("subcategory");
   const sizeSelect = document.getElementById("size");
   const msgDiv = document.getElementById("msg");
-
   let items = {};
-  let photoMap = {}; // ✅ 사진 데이터용
 
-  // ✅ 데이터 가져오기
-  fetch("https://script.google.com/macros/s/AKfycbwl8BasDXFx7UKHxvXoQfD7IST_eaBGlXsRZ-4f5d0L8h2it1dUNNwnjtux4eweNMtU/exec")
+  // 1) 물품 리스트 가져오기
+  fetch("https://script.google.com/macros/s/AKfycbw62aAe8x40mzH3A3CZHiACxD1ddR8NBmaJrqPQQ_wO_y_c8_ersw40MviFNJp__zuJ/exec")  // ← 배포된 스크립트 주소로 교체
     .then(res => res.json())
     .then(data => {
-      items = data.items;
-      photoMap = data.photos || {};
+      items = data;
       populateCategory();
     })
     .catch(err => {
@@ -111,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ✅ 대분류 → 세부종류
+  // 대분류 → 세부종류
   categorySelect.addEventListener("change", () => {
     const category = categorySelect.value;
     subSelect.innerHTML = "<option value=''>-- 선택하세요 --</option>";
@@ -124,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // ✅ 세부종류 → 사이즈
+  // 세부종류 → 사이즈(재고 표시)
   subSelect.addEventListener("change", () => {
     const category = categorySelect.value;
     const selectedType = subSelect.value;
@@ -143,62 +128,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-// ✅ 사진 보기 버튼 클릭
-document.getElementById("viewPhotos").addEventListener("click", () => {
-  const category = categorySelect.value.trim();  // ex: 보호구(안전화류)
-  const typeRaw = subSelect.value.trim();        // ex: 안전화 RF-41
-  const sizeRaw = sizeSelect.value.trim();       // ex: 270 (재고: 1)
-
-  const size = sizeRaw.split(" ")[0];            // "270"
-  const typeParts = typeRaw.split(" ");          // ['안전화', 'RF-41']
-  
-  const type = typeParts[0];                     // "안전화"
-  const model = typeParts.slice(1).join(" ");    // "RF-41" 또는 "YAK-66" 등
-
-  const key = `${category} ${type} ${model} ${size}`;  // 최종 완전한 key 조립
-
-  console.log("🧪 최종 key:", key);
-  console.log("📸 photoMap keys:", Object.keys(photoMap));
-
-  if (!category || !type || !model || !size) {
-    alert("물품 종류, 세부 종류, 사이즈를 모두 선택해주세요.");
-    return;
-  }
-
-  const photos = photoMap[key];
-  const container = document.getElementById("photoContainer");
-  container.innerHTML = "";
-
-  if (!photos || photos.length === 0) {
-    container.innerHTML = "<p>해당 물품에 대한 사진이 없습니다.</p>";
-    return;
-  }
-
-  // ✅ 이미지 표시
-  photos.forEach(url => {
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = "물품 이미지";
-    img.style.maxWidth = "100%";
-    img.style.marginBottom = "10px";
-    container.appendChild(img);
-  });
-});
-
-  } else {
-    container.innerHTML = "<p>해당 물품에 대한 사진이 없습니다.</p>";
-  }
-});
-
-
-  // ✅ 폼 제출
+  // 2) 폼 제출
   document.getElementById("materialForm").addEventListener("submit", function(e) {
     e.preventDefault();
     msgDiv.textContent = "";
     msgDiv.style.color = "green";
 
     const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbwl8BasDXFx7UKHxvXoQfD7IST_eaBGlXsRZ-4f5d0L8h2it1dUNNwnjtux4eweNMtU/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbw62aAe8x40mzH3A3CZHiACxD1ddR8NBmaJrqPQQ_wO_y_c8_ersw40MviFNJp__zuJ/exec", {
       method: "POST",
       body: new URLSearchParams(formData)
     })
@@ -219,6 +156,7 @@ document.getElementById("viewPhotos").addEventListener("click", () => {
       console.error(err);
     });
   });
+
 });
 </script>
 
